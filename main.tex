@@ -1,0 +1,523 @@
+
+\documentclass[14pt,a4paper,oneside]{article}
+% \documentclass[14pt,a4paper,oneside,twocolumn]{article}
+
+\renewcommand{\normalsize}{\large}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{anyfontsize}
+
+\lstset{
+  	language=C++,
+%	aboveskip=3mm,
+% 	belowskip=3mm,
+%  	showstringspaces=false,
+	identifierstyle=,
+	keywordstyle=\bfseries,
+  	columns=flexible,
+  	tabsize=4,
+ 	basicstyle=\ttfamily,
+% 	breaklines=true,
+%  	breakatwhitespace=true,
+}
+
+%\pagenumbering{arabic}
+
+\headsep=10mm          % отступ после колонтитула (10mm)
+
+\makeatletter%ставим, чтобы знак @ воспринимался как буква, а не как команда
+
+%\renewcommand{\@oddhead}{\LARGE\textbf{Ural Federal University}\hfil\LARGE\thepage}%верхний колонтитул для нечетных страниц
+%\renewcommand{\@evenhead}{\LARGE\textbf Ural Federal University\hfil\LARGE\thepage}%верхний колонтитул для нечетных страниц
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0.0pt}
+    \renewcommand{\footrulewidth}{0.0pt}
+    \lhead{Ural Federal University}
+    \chead{Ural FU: Strong Statement}
+    \rhead{WF 2019, page \thepage\ of\ 25}
+    \cfoot{}
+}
+\pagestyle{plain}
+
+
+\makeatother
+
+\begin{document}
+
+\section{Configure files}
+
+\lstinputlisting{sources/config.cpp}
+
+\newpage
+
+Перед контестом:
+1) Посмотреть, что используется: stdin/stdout или файлы (если файлы, то какие у них имена?)
+2) Проверить директиву ONLINE\_JUDGE
+3) Понять, как печатать
+4) long double, \_\_int128
+5) assert, throw~--- какие вердикты?
+6) Проверить, что есть и работают студия и питон
+7) Сделать файл с "JUDGEID".
+
+Перед задачей:
+1) Проверить руками сэмплы
+2) Подумать, как дебагать после написания
+3) Выписать сложные формулы и все $\pm 1$
+
+Перед сабмитом:
+1) Файлы
+2) Output-debug в том числе stderr
+3) Потестить на семплах
+4) Если python: обернуть всё в main
+5) Flush в интерактивных задачах
+6) Переполнения int
+7) Размеры массивов
+8) Вбить псевдо-максимальный тест
+9) cout.precision
+
+Если случился WA:
+1) Проверить на переполнения int и long long
+2) Перечитать условие
+3) Перечитать код
+4) Рассказать решение другому члену команды
+5) Написать стресс/интерактор/чекер
+6) Проверить, что в функциях не забыт return
+7) Потестить не только ответ, но и содержимое промежуточных переменных
+8) Изменить тесты так, чтобы ответ не менялся: пошафлить, поменять размер блока, корень дерева, растянуть координаты
+9) Поставить assert
+10) Проверить, что программа не печатает что-то неожиданное: inf, NaN, неправильное количество чисел, пустой ответ, не лекс. мин. решение
+
+Если случился TL:
+1) cin -> scanf -> getchar
+2) Сгенерить max-тест
+3) STL -> свои реализации
+4) Попробовать уместить массивы в кеш. Поменять местами for-ы и/или измерения массивов.
+5) Проверить, что из-за debug-output мы не совершаем лишних действий (не обходим всё дерево, чтобы вывести его).
+
+Если случился RE:
+1) Выход за границы вектора
+2) Stack overflow
+3) Выход за область определения (arcsin(500))
+
+\subsection{Прагмы}
+\lstinputlisting[language=C++]{sources/pragmas.cpp}
+
+\subsection{Аллокатор}
+\lstinputlisting[language=C++]{sources/allocator.cpp}
+
+\section{Математика}
+
+\subsection{Условие существования генератора}
+Первообразные корни существуют только по модулям $m$ вида $2, 4, p^a, 2p^a$, где $p$ -- простое число, $p > 2$.
+
+~
+
+~
+
+\subsection{Простые числа}
+$10^4 + 7, 10^4 + 9, 10^6 + 3, 998244353$
+
+$10^9 + 7, 10^9 + 9, 10^9 + 21, 10^9 + 33, 10^9 + 123$
+
+$10^{15} + 159, 10^{18} + 3, 10^{18} + 31, 10^{18} + 3111$
+
+\subsection{Highly composite numbers}
+$d(840) = 32, d(9240) = 64$
+
+$d(83160) = 128, d(720720) = 240$
+
+$d(8648640) = 448, d(91891800) = 768$
+
+$d(931170240) = 1344$
+
+$d(97772875200) = 4032$
+
+$d(963761198400) = 6720$
+
+$d(866421317361600) = 26880$
+
+$d(897612484786617600) = 103680$
+
+\subsection{Интегралы}
+
+\[
+\int \frac{\,dx}{a^2 + x^2} = \frac{1}{a}arctan\frac{x}{a}, a \ne 0
+\]
+
+\[
+\int \frac{\,dx}{a^2 - x^2} = \frac{1}{2a}ln\left|\frac{a+x}{a-x}\right|, a \ne 0
+\]
+  
+\[
+\int \frac{x\,dx}{a^2 \pm x^2} = \pm\frac{1}{2}ln|a^2 \pm x^2|
+\]
+
+\[
+\int \frac{\,dx}{\sqrt{a^2 - x^2}} = arcsin\frac{x}{a}, a > 0
+\]
+  
+\[
+\int \frac{\,dx}{\sqrt{x^2 \pm a^2}} = ln\left|x + \sqrt{x^2 \pm a^2}\right|, a > 0
+\]
+
+\[
+\int \frac{x\,dx} {\sqrt{a^2 \pm x^2}} = \pm \sqrt{a^2 \pm x^2} , a > 0
+\]
+
+\[
+\int {\sqrt{a^2 - x^2}}\,dx = \frac x 2 \sqrt{a^2 - x^2} + \frac {a^2} 2 \arcsin{\frac x a}, a > 0
+\]
+
+\[
+\int {\sqrt{x^2 \pm a^2}}\,dx = \frac x 2 \sqrt{x^2 \pm a^2} \pm \frac {a^2} 2 \ln{|x + \sqrt{x^2 \pm a^2}|}, a > 0
+\]
+
+\[
+\int {\sqrt{\frac{a + x}{b + x}}}\,dx = \sqrt{(a + x)(b + x)} + (a - b)\ln{(\sqrt{a + x} + \sqrt{b + x})}
+\]
+
+\[
+\int {\sqrt{\frac{a - x}{b + x}}}\,dx = \sqrt{(a - x)(b + x)} + (a + b)\arcsin{\sqrt{\frac{x + b}{a + b}}}
+\]
+
+\[
+\int {\sqrt{\frac{a + x}{b - x}}}\,dx = -\sqrt{(a + x)(b - x)} - (a + b)\arcsin{\sqrt{\frac{b - x}{a + b}}}
+\]
+
+\subsection{Матан}
+
+\hspace*{1.3em}Длина плоской кривой $y = f(x)$
+
+\[
+l = \int\limits_{x_1}^{x_2} \sqrt{1 + f’(x)^2} \,dx = \int\limits_{t_1}^{t_2} \sqrt{x_t'^{~2} + y_t'^{~2}} \,dt
+\]
+
+Площадь поверхности вращения кривой $y = f(x)$ вокргу оси $OX$:
+
+\[
+S = 2\pi \int\limits_{x_1}^{x_2} f(x)\sqrt{1 + f’(x)^2} \,dx
+\]
+
+Объем поверхности вращения кривой $y = f(x)$ вокргу оси $OX$:
+
+\[
+V = \pi \int\limits_{x_1}^{x_2} f(x)^2 \,dx
+\]
+
+Формула Симпсона
+
+\[
+\int\limits_a^b f(x) \,dx = {\frac h 3}\left({\frac{f(x_0) + f(x_n)} 2} + \sum_{i=1}^{n-1} f(x_i) + 2 \sum_{i=1}^{n-1} f\Bigl(x_{i+ \frac 1 2}\Bigr) \right)
+\]
+
+\subsection{Треугольник}
+
+\[
+m_a = \frac 1 2 \sqrt{2(b^2+c^2) - a^2}
+\]
+
+\[
+l_a = \frac {2\sqrt{bcp(p-a)}} {b + c}
+\]
+
+\subsection{Сфера}
+
+\hspace*{1.3em}Площадь сегмента сферы: $S=2\pi R h$
+
+Объем сегмента сферы: $V=\pi h^2 \left(R - \frac h 3\right)$
+
+Объем сектора сферы: $V=\frac 2 3 \pi h^2 R$
+
+Расстояние между точками на сфере:
+
+$L = R \arccos(\cos{\theta_1} \cos{\theta_2} + $
+
+$\sin{\theta_1} \sin{\theta_2} \cos(\phi_1 - \phi_2))$
+
+где $\theta$~--- широты (от $-{\frac \pi 2}$ до ${\frac \pi 2}$)
+
+$\phi$~--- долготы (от $-\pi$ до $\pi$)
+
+\subsection{Лемма Бернсайда}
+Чтобы посчитать классы эквивалентности, нужно для каждой валидной перестановки посчитать количество неподвижных 
+точек (объекты которым пофиг на перестановку), сложить все это и поделить на количество перестановок
+
+$ClassesCount = {\frac 1 {|G|}} \sum_{\pi \in G} I(\pi)$
+
+\subsection{Хакенбуш}
+$G$ -- функция Гранди.
+$G(T) = \oplus (G(T_i) + 1)$
+
+Сделаем
+сначала первое наблюдение: петля в графе с точки зрения игры эквивалентна
+висячему ребру, исходящему из этой вершины.
+
+Опишем теперь метод как любой граф с циклами можно превратить в
+дерево, которое имеет такую же функцию Гранди. Рассмотрим две вершины,
+лежащие на цикле. Объединим их в одну, превратив ребра, соединявшие эти
+вершины, в петли. Оказывается, получившийся граф будет иметь такую же
+функцию Гранди, как и исходный граф. Продолжая процесс пока в графе не
+исчезнут все циклы, получим в результате дерево.
+
+\subsection{Количество способов сделать граф связным}
+
+$s_1 \cdot s_2 \cdot \ldots \cdot s_k \cdot n^{k-2}$
+
+Где $n$~--- кол-во вершин, $k$~--- кол-во компонент,
+$s_i$~--- размеры компонент
+
+\section{Алгоритмы}
+
+%\subsection{Суффиксный массив}
+%\lstinputlisting[language=C++]{sources/suffixArray.cpp}
+
+%\subsection{Массив циклических сдвигов}
+%\lstinputlisting[language=C++]{sources/shiftArray.cpp}
+
+%\subsection{Быстрое преобразование Фурье}
+%\lstinputlisting[language=C++]{sources/fft.cpp}
+
+%\subsection{Алгоритм ДД}
+%\lstinputlisting[language=C++]{sources/dinic.cpp}
+
+\subsection{Алгоритм удаления циклов отрицательного веса}
+Если каждый раз искать любой отрицательный цикл, то экспоненциальное время работы. Если каждый раз искать цикл с минимальной средней стоимостью (что также можно производить за $O(nm)$), то время работы всего алгоритма уменьшится до $O(nm^2 \log n)$, однако никто не знает, есть ли тест, где достигается.
+
+\subsection{Формула из дейкстры с потенциалами}
+\lstinputlisting[language=C++]{sources/formula_from_dijkstra_with_potentials.cpp}
+
+ 
+\subsection{Алгоритм Эдмондса}
+\lstinputlisting[language=C++]{sources/edmond.cpp}
+
+%\subsection{Префикс-функция}
+%\lstinputlisting[language=C++]{sources/prefix.cpp}
+
+\subsection{Суффиксный автомат}%Олег
+\lstinputlisting[language=C++]{sources/automaton.cpp}
+
+%\subsection{Ахо-Корасик}%Ероп
+%\lstinputlisting[language=C++]{sources/krasic.cpp}
+
+\subsection{Декомпозиция Линдона}
+\lstinputlisting[language=C++]{sources/lyndon_decomposition.cpp}
+
+%\subsection{Компоненты двусвязности}%Олег
+%\lstinputlisting[language=C++]{sources/ts.cpp}
+
+\subsection{Иосиф Флавий}
+\lstinputlisting[language=C++]{sources/joseph.cpp}
+
+\subsection{Теория чисел}
+\lstinputlisting[language=C++]{sources/number_theory.cpp}
+
+\subsection{Пересечение полуплоскостей}
+\lstinputlisting[language=C++]{sources/halfPlaneInter.cpp}
+
+\subsection{Берлекемп-Месси}
+\lstinputlisting[language=C++]{sources/bm.cpp}
+
+\subsection{Венгерка}
+\lstinputlisting[language=C++]{sources/hungarian.cpp}
+
+\subsection{Укконен}
+\lstinputlisting[language=C++]{sources/ukkonen.cpp}
+
+\subsection{Суф мас}
+\lstinputlisting[language=C++]{sources/suf_array_log2.cpp}
+
+\subsection{Касаи}
+\lstinputlisting[language=C++]{sources/kasai_from_neerc_wiki.cpp}
+
+\subsection{Персистентное Декартово дерево}
+\lstinputlisting[language=C++]{sources/Treap.cpp}
+
+\newpage
+\section{Запускаем Данилючка, работяги}
+{\fontsize{4}{4.8}\selectfont
+\lstinputlisting[language=C++]{sources/daniluk.txt}
+}
+
+\newpage
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+&comment&Валя&Саша&Коля\\
+\hline
+\begin{minipage}{1cm}
+~\\
+\centering
+A
+~\\
+~\\
+\end{minipage}
+&
+\begin{minipage}{7,5cm}
+~\\
+~\\
+~\\
+~\\
+\end{minipage}
+&
+\begin{minipage}{2,5cm}
+~\\
+~\\
+~\\
+\end{minipage}
+&
+\begin{minipage}{2,5cm}
+~\\
+~\\
+~\\
+\end{minipage}
+&
+\begin{minipage}{2,5cm}
+~\\
+~\\
+~\\
+\end{minipage}
+\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+B
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+C
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+D
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+E
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+F
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+G
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+H
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+I
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+J
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+K
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+L
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\begin{minipage}{1cm}
+~\\
+~\\
+\centering
+M
+~\\
+~\\
+~\\
+\end{minipage}
+&&&&\\
+\hline
+\end{tabular}
+\newpage
+
+\end{document}
+                              
